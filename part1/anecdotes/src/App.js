@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
 
+const DisplayVote = ({voteCount}) => {
+  if (voteCount === 1) {
+    return (
+      <p>has {voteCount} vote</p>
+    );
+  }
+  return (
+    <p>has {voteCount} votes</p>
+  );
+};
+
 const Button = ({handleClick, text}) => (
   <button onClick={handleClick}>{text}</button>
 );
@@ -15,11 +26,20 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is the same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients'
   ];
   const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState(new Array(7).fill(0));
+  const copy = [...points];
   const randomIndex = () => Math.floor(Math.random() * anecdotes.length);
+  const updatePoints = () => {
+    copy[selected] += 1;
+    setPoints(copy);
+    console.log(copy);
+  }
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <DisplayVote voteCount={points[selected]} />
+      <Button handleClick={() => updatePoints()} text='vote' />
       <Button handleClick={() => setSelected(randomIndex)} text='next anecdote' />
     </div>
   );
