@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+const Button = ({handleClick, text}) => (
+  <button onClick={handleClick}>{text}</button>
+);
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -11,10 +15,12 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is the same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients'
   ];
   const [selected, setSelected] = useState(0);
+  const randomIndex = () => Math.floor(Math.random() * anecdotes.length);
 
   return (
     <div>
-      {anecdotes[selected]}
+      <p>{anecdotes[selected]}</p>
+      <Button handleClick={() => setSelected(randomIndex)} text='next anecdote' />
     </div>
   );
 }
