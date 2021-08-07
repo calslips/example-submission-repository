@@ -32,15 +32,30 @@ const App = () => {
   const updatePoints = () => {
     copy[selected] += 1;
     setPoints(copy);
-    console.log(copy);
-  }
+  };
+  const checkPoints = () => {
+    let highestIndex = 0;
+    let current = copy[highestIndex];
+    for (let i = 1; i < copy.length; i++) {
+      if (copy[i] > current) {
+        current = copy[i];
+        highestIndex = i;
+      }
+      continue;
+    }
+    return highestIndex;
+  };
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <DisplayVote voteCount={points[selected]} />
       <Button handleClick={() => updatePoints()} text='vote' />
       <Button handleClick={() => setSelected(randomIndex)} text='next anecdote' />
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[checkPoints()]}</p>
+      <DisplayVote voteCount={points[checkPoints()]} />
     </div>
   );
 }
