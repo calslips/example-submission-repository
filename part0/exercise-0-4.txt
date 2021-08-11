@@ -1,0 +1,34 @@
+title exercise 0.4: new note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+
+note over server:
+new note object pushed to notes array
+end note
+
+server->browser: URL redirect for new HTTP GET request at /exampleapp/notes
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server->browser: HTML-code
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server->browser: main.css
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server->browser: main.js
+
+note over browser:
+js code is executed by the browser
+line 23 sends the GET request for
+JSON data from the server at
+/exampleapp/data.json
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server->browser: [{content: "Last!", date: "2021-08-10T14:50:18.315Z"},…]
+
+note over browser:
+onreadystatechange is executed,
+rendering the notes to display
+as an unordered list
+end note

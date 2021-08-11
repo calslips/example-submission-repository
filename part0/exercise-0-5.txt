@@ -1,0 +1,26 @@
+title exercise 0.5: single page app
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server->browser: HTML-code
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server->browser: main.css
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+server->browser: spa.js
+
+note over browser:
+js code is executed by the browser
+line 31 sends the GET request for
+JSON data from the server at
+/exampleapp/data.json
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server->browser: [{content: "nnkn", date: "2021-08-10T15:54:43.548Z"},…]
+
+note over browser:
+onreadystatechange is executed,
+rendering the notes to display
+as an unordered list
+end note

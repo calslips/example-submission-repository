@@ -1,0 +1,12 @@
+title exercise 0.6: new note (spa)
+
+note over browser:
+form event handler onsubmit executes,
+prevents default submission of form.
+new note object created from submitted form input
+plus timestamp and pushed to notes array.
+note list rerenders and new note is sent to server.
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server->browser: status code 201 and response: {"message":"note created"}
