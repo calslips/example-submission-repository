@@ -1,5 +1,21 @@
 import React, { useState } from 'react';
 
+const Section = ({ headingText, bodyText, voteCount }) => (
+  <section>
+    <HeaderText heading={headingText} />
+    <BodyText body={bodyText} />
+    <DisplayVote voteCount={voteCount} />
+  </section>
+);
+
+const HeaderText = ({ heading }) => (
+  <h1>{heading}</h1>
+);
+
+const BodyText = ({ body }) => (
+  <p>{body}</p>
+);
+
 const DisplayVote = ({voteCount}) => {
   if (voteCount === 1) {
     return (
@@ -32,30 +48,45 @@ const App = () => {
   const updatePoints = () => {
     copy[selected] += 1;
     setPoints(copy);
+    console.log(copy);
   };
-  const checkPoints = () => {
-    let highestIndex = 0;
-    let current = copy[highestIndex];
-    for (let i = 1; i < copy.length; i++) {
-      if (copy[i] > current) {
-        current = copy[i];
-        highestIndex = i;
-      }
-      continue;
-    }
-    return highestIndex;
-  };
+  // const checkPoints = () => {
+  //   let highestIndex = 0;
+  //   let current = copy[highestIndex];
+  //   for (let i = 1; i < copy.length; i++) {
+  //     if (copy[i] > current) {
+  //       current = copy[i];
+  //       highestIndex = i;
+  //     }
+  //     continue;
+  //   }
+  //   return highestIndex;
+  // };
+  const highestValue = Math.max(...points);
+  const highestIndex = points.indexOf(highestValue);
 
   return (
     <div>
-      <h1>Anecdote of the day</h1>
+      {/* <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <DisplayVote voteCount={points[selected]} />
       <Button handleClick={() => updatePoints()} text='vote' />
       <Button handleClick={() => setSelected(randomIndex)} text='next anecdote' />
       <h1>Anecdote with most votes</h1>
-      <p>{anecdotes[checkPoints()]}</p>
-      <DisplayVote voteCount={points[checkPoints()]} />
+      <p>{anecdotes[highestIndex]}</p>
+      <DisplayVote voteCount={points[highestIndex]} /> */}
+      <Section
+        headingText='Anecdote of the day'
+        bodyText={anecdotes[selected]}
+        voteCount={points[selected]}
+      />
+      <Button handleClick={() => updatePoints()} text='vote' />
+      <Button handleClick={() => setSelected(randomIndex)} text='next anecdote' />
+      <Section
+        headingText='Anecdote with most votes'
+        bodyText={anecdotes[highestIndex]}
+        voteCount={points[highestIndex]}
+      />
     </div>
   );
 }
