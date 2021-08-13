@@ -3,11 +3,8 @@ import React, { useState } from "react";
 const Header = ({ course }) => <h1>{course.name}</h1>;
 
 const Total = ({ course }) => {
-  const sum =
-    course.parts[0].exercises +
-    course.parts[1].exercises +
-    course.parts[2].exercises;
-  return <p>Number of exercises {sum}</p>;
+  const sum = course.parts.reduce((sumOfEx, part) => (sumOfEx += part.exercises), 0);
+  return <p><b>total of {sum} exercises</b></p>;
 };
 
 const Part = (props) => (
@@ -21,6 +18,7 @@ const Content = ({ course }) => (
     {course.parts.map((part, i) => (
       <Part key={course.parts[i].id} part={course.parts[i]} />
     ))}
+    <Total course={course} />
   </div>
 );
 
@@ -52,6 +50,11 @@ const App = () => {
         name: "State of a component",
         exercises: 14,
         id: 3,
+      },
+      {
+        name: "Redux",
+        exercises: 11,
+        id: 4,
       },
     ],
   };
