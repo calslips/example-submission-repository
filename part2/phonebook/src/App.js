@@ -22,9 +22,23 @@ const App = () => {
     const personObject = {
       name: newName
     }
-    setPersons(persons.concat(personObject));
+    checkName(newName) ?
+      sameName(newName) :
+      setPersons(persons.concat(personObject));
     setNewName('');
   }
+
+  const checkName = (newName) => {
+    let same = false;
+    persons.forEach((person) => {
+      if (newName === person.name) {
+        same = true;
+      }
+    })
+    return same;
+  }
+
+  const sameName = (name) => alert(`${name} is already added to phonebook`);
 
   return (
     <div>
