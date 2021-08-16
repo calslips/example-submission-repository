@@ -1,5 +1,43 @@
 import React, { useState } from "react";
 
+const Filter = ({ search, handleFilter }) => (
+  <div>
+    filter shown with <input value={search} onChange={handleFilter} />
+  </div>
+);
+
+const PersonForm = ({
+  addPerson,
+  handleNameChange,
+  handleNumberChange,
+  newName,
+  number,
+}) => (
+  <form onSubmit={addPerson}>
+    <FormName newName={newName} handleNameChange={handleNameChange} />
+    <FormNumber number={number} handleNumberChange={handleNumberChange} />
+    <FormButton />
+  </form>
+);
+
+const FormName = ({ newName, handleNameChange }) => (
+  <div>
+    name: <input value={newName} onChange={handleNameChange} />
+  </div>
+);
+
+const FormNumber = ({ number, handleNumberChange }) => (
+  <div>
+    number: <input value={number} onChange={handleNumberChange} />
+  </div>
+);
+
+const FormButton = () => (
+  <div>
+    <button type="submit">add</button>
+  </div>
+);
+
 const List = ({ persons }) => {
   return persons.map((person) => <Person key={person.name} person={person} />);
 };
@@ -43,21 +81,27 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
-    const personObject = {
-      name: newName,
-      number: number,
-    };
-    checkName(newName)
-      ? sameName(newName)
-      : setPersons(persons.concat(personObject));
-    setNewName("");
-    setNumber("");
+    if (!newName) {
+      emptyName();
+    } else if (!number) {
+      emptyNumber();
+    } else {
+      const personObject = {
+        name: newName,
+        number: number,
+      };
+      checkName(newName)
+        ? sameName(newName)
+        : setPersons(persons.concat(personObject));
+      setNewName("");
+      setNumber("");
+    }
   };
 
   const checkName = (newName) => {
     let same = false;
     persons.forEach((person) => {
-      if (newName === person.name) {
+      if (newName.toUpperCase() === person.name.toUpperCase()) {
         same = true;
       }
     });
@@ -65,26 +109,22 @@ const App = () => {
   };
 
   const sameName = (name) => alert(`${name} is already added to phonebook`);
+  const emptyName = () => alert("Please enter a name");
+  const emptyNumber = () => alert("Please enter a number");
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with <input value={search} onChange={handleFilter} />
-      </div>
-      <h2>Add a new</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input value={number} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
+      <Filter search={search} handleFilter={handleFilter} />
+      <h3>Add a new</h3>
+      <PersonForm
+        addPerson={addPerson}
+        handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange}
+        newName={newName}
+        number={number}
+      />
+      <h3>Numbers</h3>
       {search ? <List persons={searchResult} /> : <List persons={persons} />}
     </div>
   );
